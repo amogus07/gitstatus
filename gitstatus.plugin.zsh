@@ -106,12 +106,12 @@ typeset -g _gitstatus_plugin_dir"${1:-}"="${${(%):-%x}:A:h}"
 #   VCS_STATUS_HAS_STAGED           1 if there are staged changes, 0 otherwise.
 #   VCS_STATUS_HAS_CONFLICTED       1 if there are conflicted changes, 0 otherwise.
 #   VCS_STATUS_HAS_UNSTAGED         1 if there are unstaged changes, 0 if there aren't, -1 if
+#                                   unknown.
 #   VCS_STATUS_NUM_STAGED_NEW       The number of staged new files. Note that renamed files
 #                                   are reported as deleted plus new.
 #   VCS_STATUS_NUM_STAGED_DELETED   The number of staged deleted files. Note that renamed files
 #                                   are reported as deleted plus new.
 #   VCS_STATUS_NUM_STAGED_MODIFIED  The number of staged modified files.
-#                                   unknown.
 #   VCS_STATUS_NUM_UNSTAGED_DELETED The number of unstaged deleted files. Note that renamed files
 #                                   are reported as deleted plus new.
 #   VCS_STATUS_HAS_UNTRACKED        1 if there are untracked files, 0 if there aren't, -1 if
