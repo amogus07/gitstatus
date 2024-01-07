@@ -327,11 +327,11 @@ function gitstatus_stop() {
 #   VCS_STATUS_HAS_CONFLICTED       1 if there are conflicted changes, 0 otherwise.
 #   VCS_STATUS_HAS_UNSTAGED         1 if there are unstaged changes, 0 if there aren't, -1 if
 #                                   unknown.
-#   VCS_STATUS_NUM_STAGED_MODIFIED  The number of staged modified files.
 #   VCS_STATUS_NUM_STAGED_NEW       The number of staged new files. Note that renamed files
 #                                   are reported as deleted plus new.
 #   VCS_STATUS_NUM_STAGED_DELETED   The number of staged deleted files. Note that renamed files
 #                                   are reported as deleted plus new.
+#   VCS_STATUS_NUM_STAGED_MODIFIED  The number of staged modified files.
 #   VCS_STATUS_NUM_UNSTAGED_DELETED The number of unstaged deleted files. Note that renamed files
 #                                   are reported as deleted plus new.
 #   VCS_STATUS_HAS_UNTRACKED        1 if there are untracked files, 0 if there aren't, -1 if
@@ -409,9 +409,9 @@ function gitstatus_query() {
     VCS_STATUS_STASHES="${resp[16]}"
     VCS_STATUS_TAG="${resp[17]}"
     VCS_STATUS_NUM_UNSTAGED_DELETED="${resp[18]}"
-    VCS_STATUS_NUM_STAGED_MODIFIED="${resp[19]:-0}"
-    VCS_STATUS_NUM_STAGED_NEW="${resp[20]:-0}"
-    VCS_STATUS_NUM_STAGED_DELETED="${resp[21]:-0}"
+    VCS_STATUS_NUM_STAGED_NEW="${resp[19]:-0}"
+    VCS_STATUS_NUM_STAGED_DELETED="${resp[20]:-0}"
+    VCS_STATUS_NUM_STAGED_MODIFIED="${resp[21]:-0}"
     VCS_STATUS_PUSH_REMOTE_NAME="${resp[22]:-}"
     VCS_STATUS_PUSH_REMOTE_URL="${resp[23]:-}"
     VCS_STATUS_PUSH_COMMITS_AHEAD="${resp[24]:-0}"
@@ -454,9 +454,9 @@ function gitstatus_query() {
     unset VCS_STATUS_STASHES
     unset VCS_STATUS_TAG
     unset VCS_STATUS_NUM_UNSTAGED_DELETED
-    unset VCS_STATUS_NUM_STAGED_MODIFIED
     unset VCS_STATUS_NUM_STAGED_NEW
     unset VCS_STATUS_NUM_STAGED_DELETED
+    unset VCS_STATUS_NUM_STAGED_MODIFIED
     unset VCS_STATUS_PUSH_REMOTE_NAME
     unset VCS_STATUS_PUSH_REMOTE_URL
     unset VCS_STATUS_PUSH_COMMITS_AHEAD

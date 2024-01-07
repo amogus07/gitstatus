@@ -28,9 +28,9 @@
 #   VCS_STATUS_NUM_STAGED=0
 #   VCS_STATUS_NUM_UNSTAGED=1
 #   VCS_STATUS_NUM_SKIP_WORKTREE=0
-#   VCS_STATUS_NUM_STAGED_MODIFIED=0
 #   VCS_STATUS_NUM_STAGED_NEW=0
 #   VCS_STATUS_NUM_STAGED_DELETED=0
+#   VCS_STATUS_NUM_STAGED_MODIFIED=0
 #   VCS_STATUS_NUM_UNSTAGED_DELETED=0
 #   VCS_STATUS_NUM_UNTRACKED=1
 #   VCS_STATUS_PUSH_COMMITS_AHEAD=0
@@ -106,12 +106,12 @@ typeset -g _gitstatus_plugin_dir"${1:-}"="${${(%):-%x}:A:h}"
 #   VCS_STATUS_HAS_STAGED           1 if there are staged changes, 0 otherwise.
 #   VCS_STATUS_HAS_CONFLICTED       1 if there are conflicted changes, 0 otherwise.
 #   VCS_STATUS_HAS_UNSTAGED         1 if there are unstaged changes, 0 if there aren't, -1 if
-#   VCS_STATUS_NUM_STAGED_MODIFIED  The number of staged modified files.
-#                                   unknown.
 #   VCS_STATUS_NUM_STAGED_NEW       The number of staged new files. Note that renamed files
 #                                   are reported as deleted plus new.
 #   VCS_STATUS_NUM_STAGED_DELETED   The number of staged deleted files. Note that renamed files
 #                                   are reported as deleted plus new.
+#   VCS_STATUS_NUM_STAGED_MODIFIED  The number of staged modified files.
+#                                   unknown.
 #   VCS_STATUS_NUM_UNSTAGED_DELETED The number of unstaged deleted files. Note that renamed files
 #                                   are reported as deleted plus new.
 #   VCS_STATUS_HAS_UNTRACKED        1 if there are untracked files, 0 if there aren't, -1 if
@@ -286,7 +286,7 @@ function gitstatus_process_results"${1:-}"() {
 }
 
 function _gitstatus_clear"${1:-}"() {
-  unset VCS_STATUS_{WORKDIR,COMMIT,LOCAL_BRANCH,REMOTE_BRANCH,REMOTE_NAME,REMOTE_URL,ACTION,INDEX_SIZE,NUM_STAGED,NUM_UNSTAGED,NUM_CONFLICTED,NUM_UNTRACKED,HAS_STAGED,HAS_UNSTAGED,HAS_CONFLICTED,HAS_UNTRACKED,COMMITS_AHEAD,COMMITS_BEHIND,STASHES,TAG,NUM_UNSTAGED_DELETED,NUM_STAGED_MODIFIED,NUM_STAGED_NEW,NUM_STAGED_DELETED,PUSH_REMOTE_NAME,PUSH_REMOTE_URL,PUSH_COMMITS_AHEAD,PUSH_COMMITS_BEHIND,NUM_SKIP_WORKTREE,NUM_ASSUME_UNCHANGED}
+  unset VCS_STATUS_{WORKDIR,COMMIT,LOCAL_BRANCH,REMOTE_BRANCH,REMOTE_NAME,REMOTE_URL,ACTION,INDEX_SIZE,NUM_STAGED,NUM_UNSTAGED,NUM_CONFLICTED,NUM_UNTRACKED,HAS_STAGED,HAS_UNSTAGED,HAS_CONFLICTED,HAS_UNTRACKED,COMMITS_AHEAD,COMMITS_BEHIND,STASHES,TAG,NUM_UNSTAGED_DELETED,NUM_STAGED_NEW,NUM_STAGED_DELETED,NUM_STAGED_MODIFIED,PUSH_REMOTE_NAME,PUSH_REMOTE_URL,PUSH_COMMITS_AHEAD,PUSH_COMMITS_BEHIND,NUM_SKIP_WORKTREE,NUM_ASSUME_UNCHANGED}
 }
 
 function _gitstatus_process_response"${1:-}"() {
@@ -340,9 +340,9 @@ function _gitstatus_process_response"${1:-}"() {
           VCS_STATUS_STASHES              \
           VCS_STATUS_TAG                  \
           VCS_STATUS_NUM_UNSTAGED_DELETED \
-          VCS_STATUS_NUM_STAGED_MODIFIED  \
           VCS_STATUS_NUM_STAGED_NEW       \
           VCS_STATUS_NUM_STAGED_DELETED   \
+          VCS_STATUS_NUM_STAGED_MODIFIED  \
           VCS_STATUS_PUSH_REMOTE_NAME     \
           VCS_STATUS_PUSH_REMOTE_URL      \
           VCS_STATUS_PUSH_COMMITS_AHEAD   \
@@ -352,7 +352,7 @@ function _gitstatus_process_response"${1:-}"() {
           VCS_STATUS_COMMIT_ENCODING      \
           VCS_STATUS_COMMIT_SUMMARY in "${(@)resp[3,30]}"; do
       done
-      typeset -gi VCS_STATUS_{INDEX_SIZE,NUM_STAGED,NUM_UNSTAGED,NUM_CONFLICTED,NUM_UNTRACKED,COMMITS_AHEAD,COMMITS_BEHIND,STASHES,NUM_UNSTAGED_DELETED,NUM_STAGED_MODIFIED,NUM_STAGED_NEW,NUM_STAGED_DELETED,PUSH_COMMITS_AHEAD,PUSH_COMMITS_BEHIND,NUM_SKIP_WORKTREE,NUM_ASSUME_UNCHANGED}
+      typeset -gi VCS_STATUS_{INDEX_SIZE,NUM_STAGED,NUM_UNSTAGED,NUM_CONFLICTED,NUM_UNTRACKED,COMMITS_AHEAD,COMMITS_BEHIND,STASHES,NUM_UNSTAGED_DELETED,NUM_STAGED_NEW,NUM_STAGED_DELETED,NUM_STAGED_MODIFIED,PUSH_COMMITS_AHEAD,PUSH_COMMITS_BEHIND,NUM_SKIP_WORKTREE,NUM_ASSUME_UNCHANGED}
       typeset -gi VCS_STATUS_HAS_STAGED=$((VCS_STATUS_NUM_STAGED > 0))
       if (( dirty_max_index_size >= 0 && VCS_STATUS_INDEX_SIZE > dirty_max_index_size )); then
         typeset -gi                    \
