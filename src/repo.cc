@@ -78,7 +78,6 @@ T Exchange(std::atomic<T>& x, T v) {
 const char* DeltaStr(git_delta_t t) {
   switch (t) {
     case GIT_DELTA_UNMODIFIED: return "unmodified";
-    case GIT_DELTA_MODIFIED; return "modified";
     case GIT_DELTA_ADDED: return "added";
     case GIT_DELTA_DELETED: return "deleted";
     case GIT_DELTA_MODIFIED: return "modified";

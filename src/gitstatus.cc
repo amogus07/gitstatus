@@ -142,7 +142,7 @@ void ProcessRequest(const Options& opts, RepoCache& cache, Request req) {
   // The number of unstaged deleted files. At most stats.num_unstaged.
   resp.Print(stats.num_unstaged_deleted);
   // The number of staged modified files. At most stats.num_staged.
-  resp.Print(stats.num_staged_modified)
+  resp.Print(stats.num_staged_modified);
   // The number of staged new files. At most stats.num_staged.
   resp.Print(stats.num_staged_new);
   // The number of staged deleted files. At most stats.num_staged.
