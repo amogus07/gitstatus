@@ -145,8 +145,6 @@ void ProcessRequest(const Options& opts, RepoCache& cache, Request req) {
   resp.Print(stats.num_staged_new);
   // The number of staged deleted files. At most stats.num_staged.
   resp.Print(stats.num_staged_deleted);
-  // The number of staged modified files. At most stats.num_staged.
-  resp.Print(stats.num_staged_modified);
 
   // Push remote or null.
   PushRemotePtr push_remote = GetPushRemote(repo->repo(), head);
@@ -177,6 +175,9 @@ void ProcessRequest(const Options& opts, RepoCache& cache, Request req) {
   Truncate(msg.summary, opts.max_commit_summary_length);
   resp.Print(msg.encoding);
   resp.Print(msg.summary);
+  
+  // The number of staged modified files. At most stats.num_staged.
+  resp.Print(stats.num_staged_modified);
 
   resp.Dump("with git status");
 }

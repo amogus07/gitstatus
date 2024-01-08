@@ -30,7 +30,6 @@
 #   VCS_STATUS_NUM_SKIP_WORKTREE=0
 #   VCS_STATUS_NUM_STAGED_NEW=0
 #   VCS_STATUS_NUM_STAGED_DELETED=0
-#   VCS_STATUS_NUM_STAGED_MODIFIED=0
 #   VCS_STATUS_NUM_UNSTAGED_DELETED=0
 #   VCS_STATUS_NUM_UNTRACKED=1
 #   VCS_STATUS_PUSH_COMMITS_AHEAD=0
@@ -44,6 +43,7 @@
 #   VCS_STATUS_STASHES=0
 #   VCS_STATUS_TAG=''
 #   VCS_STATUS_WORKDIR=/home/romka/powerlevel10k
+#   VCS_STATUS_NUM_STAGED_MODIFIED=0
 
 [[ -o 'interactive' ]] || 'return'
 
@@ -111,7 +111,6 @@ typeset -g _gitstatus_plugin_dir"${1:-}"="${${(%):-%x}:A:h}"
 #                                   are reported as deleted plus new.
 #   VCS_STATUS_NUM_STAGED_DELETED   The number of staged deleted files. Note that renamed files
 #                                   are reported as deleted plus new.
-#   VCS_STATUS_NUM_STAGED_MODIFIED  The number of staged modified files.
 #   VCS_STATUS_NUM_UNSTAGED_DELETED The number of unstaged deleted files. Note that renamed files
 #                                   are reported as deleted plus new.
 #   VCS_STATUS_HAS_UNTRACKED        1 if there are untracked files, 0 if there aren't, -1 if
@@ -133,6 +132,7 @@ typeset -g _gitstatus_plugin_dir"${1:-}"="${${(%):-%x}:A:h}"
 #                                   Non-negative integer.
 #   VCS_STATUS_NUM_ASSUME_UNCHANGED The number of files in the index with assume-unchanged bit set.
 #                                   Non-negative integer.
+#   VCS_STATUS_NUM_STAGED_MODIFIED  The number of staged modified files.
 #
 # The point of reporting -1 via VCS_STATUS_HAS_* is to allow the command to skip scanning files in
 # large repos. See -m flag of gitstatus_start.
@@ -286,7 +286,7 @@ function gitstatus_process_results"${1:-}"() {
 }
 
 function _gitstatus_clear"${1:-}"() {
-  unset VCS_STATUS_{WORKDIR,COMMIT,LOCAL_BRANCH,REMOTE_BRANCH,REMOTE_NAME,REMOTE_URL,ACTION,INDEX_SIZE,NUM_STAGED,NUM_UNSTAGED,NUM_CONFLICTED,NUM_UNTRACKED,HAS_STAGED,HAS_UNSTAGED,HAS_CONFLICTED,HAS_UNTRACKED,COMMITS_AHEAD,COMMITS_BEHIND,STASHES,TAG,NUM_UNSTAGED_DELETED,NUM_STAGED_NEW,NUM_STAGED_DELETED,NUM_STAGED_MODIFIED,PUSH_REMOTE_NAME,PUSH_REMOTE_URL,PUSH_COMMITS_AHEAD,PUSH_COMMITS_BEHIND,NUM_SKIP_WORKTREE,NUM_ASSUME_UNCHANGED}
+  unset VCS_STATUS_{WORKDIR,COMMIT,LOCAL_BRANCH,REMOTE_BRANCH,REMOTE_NAME,REMOTE_URL,ACTION,INDEX_SIZE,NUM_STAGED,NUM_UNSTAGED,NUM_CONFLICTED,NUM_UNTRACKED,HAS_STAGED,HAS_UNSTAGED,HAS_CONFLICTED,HAS_UNTRACKED,COMMITS_AHEAD,COMMITS_BEHIND,STASHES,TAG,NUM_UNSTAGED_DELETED,NUM_STAGED_NEW,NUM_STAGED_DELETED,PUSH_REMOTE_NAME,PUSH_REMOTE_URL,PUSH_COMMITS_AHEAD,PUSH_COMMITS_BEHIND,NUM_SKIP_WORKTREE,NUM_ASSUME_UNCHANGED,NUM_STAGED_MODIFIED}
 }
 
 function _gitstatus_process_response"${1:-}"() {
@@ -342,7 +342,6 @@ function _gitstatus_process_response"${1:-}"() {
           VCS_STATUS_NUM_UNSTAGED_DELETED \
           VCS_STATUS_NUM_STAGED_NEW       \
           VCS_STATUS_NUM_STAGED_DELETED   \
-          VCS_STATUS_NUM_STAGED_MODIFIED  \
           VCS_STATUS_PUSH_REMOTE_NAME     \
           VCS_STATUS_PUSH_REMOTE_URL      \
           VCS_STATUS_PUSH_COMMITS_AHEAD   \
@@ -350,9 +349,10 @@ function _gitstatus_process_response"${1:-}"() {
           VCS_STATUS_NUM_SKIP_WORKTREE    \
           VCS_STATUS_NUM_ASSUME_UNCHANGED \
           VCS_STATUS_COMMIT_ENCODING      \
-          VCS_STATUS_COMMIT_SUMMARY in "${(@)resp[3,30]}"; do
+          VCS_STATUS_COMMIT_SUMMARY       \
+          VCS_STATUS_NUM_STAGED_MODIFIED in "${(@)resp[3,30]}"; do
       done
-      typeset -gi VCS_STATUS_{INDEX_SIZE,NUM_STAGED,NUM_UNSTAGED,NUM_CONFLICTED,NUM_UNTRACKED,COMMITS_AHEAD,COMMITS_BEHIND,STASHES,NUM_UNSTAGED_DELETED,NUM_STAGED_NEW,NUM_STAGED_DELETED,NUM_STAGED_MODIFIED,PUSH_COMMITS_AHEAD,PUSH_COMMITS_BEHIND,NUM_SKIP_WORKTREE,NUM_ASSUME_UNCHANGED}
+      typeset -gi VCS_STATUS_{INDEX_SIZE,NUM_STAGED,NUM_UNSTAGED,NUM_CONFLICTED,NUM_UNTRACKED,COMMITS_AHEAD,COMMITS_BEHIND,STASHES,NUM_UNSTAGED_DELETED,NUM_STAGED_NEW,NUM_STAGED_DELETED,PUSH_COMMITS_AHEAD,PUSH_COMMITS_BEHIND,NUM_SKIP_WORKTREE,NUM_ASSUME_UNCHANGED,NUM_STAGED_MODIFIED}
       typeset -gi VCS_STATUS_HAS_STAGED=$((VCS_STATUS_NUM_STAGED > 0))
       if (( dirty_max_index_size >= 0 && VCS_STATUS_INDEX_SIZE > dirty_max_index_size )); then
         typeset -gi                    \

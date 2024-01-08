@@ -55,10 +55,10 @@ struct IndexStats {
   size_t num_untracked = 0;
   size_t num_staged_new = 0;
   size_t num_staged_deleted = 0;
-  size_t num_staged_modified = 0;
   size_t num_unstaged_deleted = 0;
   size_t num_skip_worktree = 0;
   size_t num_assume_unchanged = 0;
+  size_t num_staged_modified = 0;
 };
 
 class Repo {
@@ -116,11 +116,11 @@ class Repo {
   std::atomic<size_t> untracked_{0};
   std::atomic<size_t> staged_new_{0};
   std::atomic<size_t> staged_deleted_{0};
-  std::atomic<size_t> staged_modified_{0};
   std::atomic<size_t> unstaged_deleted_{0};
   std::atomic<size_t> skip_worktree_{0};
   std::atomic<size_t> assume_unchanged_{0};
   std::atomic<Tribool> untracked_cache_{Tribool::kUnknown};
+  std::atomic<size_t> staged_modified_{0};
 };
 
 }  // namespace gitstatus

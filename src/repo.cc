@@ -176,9 +176,9 @@ IndexStats Repo::GetIndexStats(const git_oid* head, git_config* cfg) {
     Store(conflicted_, {});
     Store(staged_new_, {});
     Store(staged_deleted_, {});
-    Store(staged_modified_, {});
     Store(skip_worktree_, {});
     Store(assume_unchanged_, {});
+    Store(staged_modified_, {});
   } else if (head) {
     if (git_oid_equal(head, &head_)) {
       LOG(INFO) << "Index and HEAD unchanged; staged = " << Load(staged_)
@@ -189,9 +189,9 @@ IndexStats Repo::GetIndexStats(const git_oid* head, git_config* cfg) {
       Store(conflicted_, {});
       Store(staged_new_, {});
       Store(staged_deleted_, {});
-      Store(staged_modified_, {});
       Store(skip_worktree_, {});
       Store(assume_unchanged_, {});
+      Store(staged_modified_, {});
       StartStagedScan(head);
     }
   } else {
@@ -209,9 +209,9 @@ IndexStats Repo::GetIndexStats(const git_oid* head, git_config* cfg) {
     Store(conflicted_, {});
     Store(staged_new_, staged);
     Store(staged_deleted_, {});
-    Store(staged_modified_, {});
     Store(skip_worktree_, skip_worktree);
     Store(assume_unchanged_, assume_unchanged);
+    Store(staged_modified_, {});
   }
 
   if (index_size <= lim_.dirty_max_index_size &&
@@ -240,10 +240,10 @@ IndexStats Repo::GetIndexStats(const git_oid* head, git_config* cfg) {
           .num_untracked = std::min(Load(untracked_), lim_.max_num_untracked),
           .num_staged_new = std::min(Load(staged_new_), num_staged),
           .num_staged_deleted = std::min(Load(staged_deleted_), num_staged),
-          .num_staged_modified = std::min(Load(staged_modified_), num_staged),
           .num_unstaged_deleted = std::min(Load(unstaged_deleted_), num_unstaged),
           .num_skip_worktree = Load(skip_worktree_),
-          .num_assume_unchanged = Load(assume_unchanged_)};
+          .num_assume_unchanged = Load(assume_unchanged_),
+          .num_staged_modified = std::min(Load(staged_modified_), num_staged)};
 }
 
 int Repo::OnDelta(const char* type, const git_diff_delta& d, std::atomic<size_t>& c1, size_t m1,
